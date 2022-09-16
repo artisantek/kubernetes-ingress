@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: webapp
+  name: nodejs-users
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+      - image: adhig93/kubernetesjenkins:ver2
+        name: nodejs
+        ports:
+        - containerPort: 3080
+      imagePullSecrets:
+      - name: dockerhub
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodejs-users-svc
+spec:
+  ports:
+  - port: 3080
+    targetPort: 3080
+  selector:
+    app: webapp

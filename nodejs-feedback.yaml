@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: webapp
+  name: nodejs-feedback
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+      - image: adhig93/nodejs-feedback
+        imagePullPolicy: Always
+        name: nodejs
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: dockerhub
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodejs-feedback-svc
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: webapp
