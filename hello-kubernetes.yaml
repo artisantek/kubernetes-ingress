@@ -2,31 +2,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: k8s-hello
+  name: hello
 spec:
   selector:
     matchLabels:
-      app: k8s-hello
+      app: hello
   replicas: 2
   template:
     metadata:
       labels:
-        app: k8s-hello
+        app: hello
     spec:
       containers:
-      - name: k8s-hello
-        image: paulbouwer/hello-kubernetes:1.10
-   
-
+      - name: hello
+        image: artisantek/k8s-helloworld
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: k8s-hello-svc
+  name: hello
 spec:
   type: ClusterIP
   ports:
   - port: 80
     targetPort: 8080
   selector:
-    app: k8s-hello
+    app: hello
