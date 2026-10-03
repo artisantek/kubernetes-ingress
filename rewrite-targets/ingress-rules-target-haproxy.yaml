@@ -3,11 +3,7 @@ kind: Ingress
 metadata:
   name: ingress
   annotations:
-    haproxy.org/path-rewrite: |
-      /blue$ /
-      /blue/(.*) /\1
-      /green$ /
-      /green/(.*) /\1
+    haproxy.org/path-rewrite: /
 spec:
   ingressClassName: haproxy
   rules:
@@ -20,6 +16,7 @@ spec:
             name: blue
             port:
               number: 80
+
       - path: /green
         pathType: Prefix
         backend:
